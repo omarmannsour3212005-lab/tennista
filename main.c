@@ -1,185 +1,196 @@
 #include <stdio.h>
 #include <string.h>
-#include "structs.h"
-#include "files.h"
 
-/*
- * Funzione: inserisciTennista
- * --------------------------
- * Permette all'amministratore di inserire i dati di un tennista.
- * I dati vengono salvati nel file binario tramite la funzione salvaTennista().
- */
-void inserisciTennista() {
+/* Minimal local definition in case tennisti.h is missing. */
+typedef struct {
+    int id;
+    char nome[64];
+    char cognome[64];
+    int ranking;
+    float costo;
+    char stato[32];
+} Tennista;
 
-    // Dichiarazione di una variabile di tipo Tennista
-    Tennista player;
+Tennista t[100];
+int n = 0;
+//funzione per  aggiungere un giocatore
 
-    // Titolo della sezione
-    printf("\n=== INSERIMENTO TENNISTA ===\n");
+void addTennista(){
 
-    // Inserimento dell'ID univoco del tennista
-    printf("Inserisci il ID: ");
-    scanf("%d", &player.id);
+    printf("\n--- Ajouter Tennista ---\n");
 
-    // Inserimento del nome
-    printf("Inserisci il Nome: ");
-    scanf("%s", player.nome);
+    printf("ID : ");
+    scanf("%d",&t[n].id);
 
-    // Inserimento del cognome
-    printf("Inserisci il Cognome: ");
-    scanf("%s", player.cognome);
+    printf("Nome : ");
+    scanf("%s",t[n].nome);
 
-    // Inserimento della posizione nel ranking ATP/WTA
-    printf("Inserisci il Ranking: ");
-    scanf("%d", &player.ranking);
+    printf("Cognome : ");
+    scanf("%s",t[n].cognome);
 
-    // Inserimento del costo in crediti del tennista
-    printf("Inserisci il Crediti: ");
-    scanf("%d", &player.crediti);
+    printf("Ranking : ");
+    scanf("%d",&t[n].ranking);
 
-    // Inserimento dello stato del tennista: 1 disponibile, 0 non disponibile
-    printf("Il tennista e disponibile? (1 = Si, 0 = No): ");
-    scanf("%d", &player.disponibile);
+    printf("Costo : ");
+    scanf("%f",&t[n].costo);
 
-    // Salvataggio del tennista nel file binario
-    salvaTennista(player);
+    printf("Stato : ");
+    scanf("%s",t[n].stato);
 
-    // Messaggio di conferma
-    printf("\nTennista salvato correttamente!\n");
+    n++;
 
-    // Visualizzazione dei dati appena inseriti
-    printf("\n=== DATI TENNISTA ===\n");
-    printf("ID: %d\n", player.id);
-    printf("Nome: %s\n", player.nome);
-    printf("Cognome: %s\n", player.cognome);
-    printf("Ranking: %d\n", player.ranking);
-    printf("Crediti: %d\n", player.crediti);
-    printf("Disponibilita: %s\n", player.disponibile ? "Si" : "No");
+    printf("Ajout termine.\n");
 }
+//funzione per  mostrare il giocatore
 
-/*
- * Funzione principale del programma.
- * Mostra il menu iniziale e permette all'utente di scegliere
- * se accedere come amministratore, come Fanta-Coach oppure uscire.
- */
-int main() {
+void showTennisti(){
 
-    // Variabile usata per memorizzare la scelta dell'utente nel menu principale
-    int scelta;
+    if(n == 0){
 
-    // Titolo del programma
-    printf("=== FANTATENNIS ===\n");
-
-    // Menu principale richiesto dalla traccia
-    printf("1. Admin\n");
-    printf("2. Fanta-Coach\n");
-    printf("3. Esci\n");
-
-    // Lettura della scelta dell'utente
-    printf("Scegli un'opzione: ");
-    scanf("%d", &scelta);
-
-    // Gestione della scelta principale
-    switch (scelta) {
-
-        case 1: {
-
-            // Variabile per la scelta nel menu amministratore
-            int sceltaAdmin;
-
-            // Menu amministratore
-            printf("\n=== ADMIN ===\n");
-            printf("1. Aggiungi Tennista\n");
-            printf("2. Visualizza Tennisti\n");
-            printf("3. Cerca Tennista\n");
-            printf("4. Indietro\n");
-
-            // Lettura della scelta admin
-            printf("Scegli un'opzione: ");
-            scanf("%d", &sceltaAdmin);
-
-            // Gestione delle funzionalità dell'amministratore
-            switch (sceltaAdmin) {
-
-                case 1:
-                    // Inserimento e salvataggio di un nuovo tennista
-                    inserisciTennista();
-                    break;
-
-                case 2:
-                    // Visualizzazione di tutti i tennisti salvati nel file
-                    visualizzaTennisti();
-                    break;
-
-                case 3:
-                    // Ricerca di un tennista nel file
-                    cercaTennista();
-                    break;
-
-                case 4:
-                    // Ritorno al menu principale
-                    printf("Ritorno al menu principale...\n");
-                    break;
-
-                default:
-                    // Gestione di una scelta non valida
-                    printf("Scelta non valida.\n");
-            }
-
-            break;
-        }
-
-        case 2: {
-
-            // Variabile per la scelta nel menu Fanta-Coach
-            int sceltaCoach;
-
-            // Menu dedicato al Fanta-Coach
-            printf("\n=== FANTA-COACH ===\n");
-            printf("1. Registrazione\n");
-            printf("2. Login\n");
-            printf("3. Crea Squadra\n");
-            printf("4. Visualizza Classifica\n");
-
-            // Lettura della scelta coach
-            printf("Scegli un'opzione: ");
-            scanf("%d", &sceltaCoach);
-
-            // Gestione delle funzionalità del Fanta-Coach
-            switch (sceltaCoach) {
-
-                case 1:
-                    printf("Funzione di registrazione non implementata.\n");
-                    break;
-
-                case 2:
-                    printf("Funzione di login non implementata.\n");
-                    break;
-
-                case 3:
-                    printf("Funzione di creazione squadra non implementata.\n");
-                    break;
-
-                case 4:
-                    printf("Funzione di visualizzazione classifica non implementata.\n");
-                    break;
-
-                default:
-                    printf("Scelta non valida.\n");
-            }
-
-            break;
-        }
-
-        case 3:
-            // Chiusura del programma
-            printf("Uscita dal programma...\n");
-            break;
-
-        default:
-            // Scelta non valida nel menu principale
-            printf("Scelta non valida.\n");
+        printf("\nListe vide.\n");
+        return;
     }
 
-    return 0;
+    printf("\n===== Tennisti =====\n");
+
+    for(int i=0; i<n; i++){
+
+        printf("\nTennista %d\n",i+1);
+
+        printf("ID : %d\n",t[i].id);
+        printf("Nome : %s\n",t[i].nome);
+        printf("Cognome : %s\n",t[i].cognome);
+        printf("Ranking : %d\n",t[i].ranking);
+        printf("Costo : %.2f\n",t[i].costo);
+        printf("Stato : %s\n",t[i].stato);
+    }
+}
+//funzione per cercare un giocatore
+
+void searchTennista(){
+
+    int id;
+    int test = 0;
+
+    printf("\nEntrer ID : ");
+    scanf("%d",&id);
+
+    for(int i=0; i<n; i++){
+
+        if(t[i].id == id){
+
+            printf("\nTennista trouve.\n");
+
+            printf("Nome : %s\n",t[i].nome);
+            printf("Cognome : %s\n",t[i].cognome);
+            printf("Ranking : %d\n",t[i].ranking);
+            printf("Costo : %.2f\n",t[i].costo);
+            printf("Stato : %s\n",t[i].stato);
+
+            test = 1;
+        }
+    }
+
+    if(test == 0){
+
+        printf("ID introuvable.\n");
+    }
+}
+//funzione per impostare un giocatore
+
+void modifyTennista(){
+
+    int id;
+    int test = 0;
+
+    printf("\nID a modifier : ");
+    scanf("%d",&id);
+
+    for(int i=0; i<n; i++){
+
+        if(t[i].id == id){
+
+            printf("Nouveau nome : ");
+            scanf("%s",t[i].nome);
+
+            printf("Nouveau cognome : ");
+            scanf("%s",t[i].cognome);
+
+            printf("Nouveau ranking : ");
+            scanf("%d",&t[i].ranking);
+
+            printf("Nouveau costo : ");
+            scanf("%f",&t[i].costo);
+
+            printf("Nouveau stato : ");
+            scanf("%s",t[i].stato);
+
+            printf("Modification effectuee.\n");
+
+            test = 1;
+        }
+    }
+
+    if(test == 0){
+
+        printf("Tennista non trouve.\n");
+    }
+}
+//funzione per cancellare un giocatore
+
+void deleteTennista(){
+
+    int id;
+    int test = 0;
+
+    printf("\nID a supprimer : ");
+    scanf("%d",&id);
+
+    for(int i=0; i<n; i++){
+
+        if(t[i].id == id){
+
+            for(int j=i; j<n-1; j++){
+
+                t[j] = t[j+1];
+            }
+
+            n--;
+
+            test = 1;
+
+            printf("Suppression terminee.\n");
+
+            break;
+        }
+    }
+
+    if(test == 0){
+
+        printf("Aucun resultat.\n");
+    }
+}
+// Funzione per calcolare il costo in base alla classifica del giocatore 
+void calculateCostByRanking(){
+
+    int r;
+    float c;
+
+    printf("\nEntrer ranking : ");
+    scanf("%d",&r);
+
+    if(r <= 10){
+
+        c = 7000;
+
+    }else if(r <= 50){
+
+        c = 4000;
+
+    }else{
+
+        c = 1500;
+    }
+
+    printf("Le cout est : %.2f\n",c);
 }
